@@ -1,0 +1,30 @@
+on:
+  #push:
+  #pull_request:
+  workflow_dispatch:
+
+jobs:
+  job-name:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ github.token }}
+          fetch-depth: 1
+          
+      - run: |
+          git remote add github github.com/anthms/2018633.git
+          git config user.email 86444119+anthms@users.noreply.github.com
+          git config user.name anthms
+          git pull github main --ff-only --allow-unrelated-histories
+          git fetch origin
+          git ls-remote --heads github
+          git checkout --track github/prod-ex
+          git pull github prod-ex --ff-only --allow-unrelated-histories
+          git fetch github
+          git reset --hard github/prod-ex
+          git merge github/main --no-commit -s recursive -X theirs --allow-unrelated-histories
+          git stage .
+          git add .
+          git commit --allow-empty -m "🚀 Production Deploy"
+          git push github HEAD:prod-ex
