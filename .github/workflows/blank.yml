@@ -10,7 +10,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           token: ${{ github.token }}
-          fetch-depth: 1
+          fetch-depth: 0
           
       - run: |
           git remote add github https://github.com/anthms/2018633.git
