@@ -13,11 +13,12 @@ jobs:
           fetch-depth: 1
           
       - run: |
-          git remote add github github.com/anthms/2018633.git
+          git remote add github https://github.com/anthms/2018633.git
           git config user.email 86444119+anthms@users.noreply.github.com
           git config user.name anthms
           git pull github main --ff-only --allow-unrelated-histories
-          git fetch origin
+          git fetch github
+          git reset --hard github/main
           git ls-remote --heads github
           git checkout --track github/prod-ex
           git pull github prod-ex --ff-only --allow-unrelated-histories
